@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
 
-export type ITags = {
+export type TTags = {
   name: string;
   isDeleted: boolean;
 };
-export type IDetails = {
+export type TDetails = {
   level: string;
   description: string;
 };
@@ -13,10 +13,10 @@ export type TCourse = {
   instructor: string;
   categoryId: Types.ObjectId;
   price: number;
-  tags: [ITags];
+  tags: [TTags];
   startDate: string;
   endDate: string;
   language: string;
   provider: string;
-  details: IDetails;
+  details: TDetails;
 };
