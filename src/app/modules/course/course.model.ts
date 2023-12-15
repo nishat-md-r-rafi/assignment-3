@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TCourse, TDetails, TTags } from './course.interface';
+import { Review } from '../review/review.model';
 
 const detailsSchema = new Schema<TDetails>({
   level: { type: String, required: true },
@@ -22,6 +23,7 @@ const courseSchema = new Schema<TCourse>({
   language: { type: String, required: true },
   provider: { type: String, required: true },
   details: detailsSchema,
+  reviews: [{ type: Schema.Types.ObjectId, ref: Review }],
 });
 
 export const Course = model<TCourse>('Course', courseSchema);

@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { TReview } from '../review/review.interface';
 
 export type TTags = {
   name: string;
@@ -19,4 +20,5 @@ export type TCourse = {
   language: string;
   provider: string;
   details: TDetails;
+  reviews?: [Types.ObjectId];
 };

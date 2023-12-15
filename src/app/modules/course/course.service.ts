@@ -26,7 +26,8 @@ const getCoursesFromDB = async (query: Record<string, unknown>) => {
     .limit(limit);
 
   // SORT
-  const sortObj = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sortObj: { [key: string]: any } = {};
   const sortTerm: string = (query?.sortBy as string) || 'createdAt';
   const sortOrder: number = query.sortOrder === 'asc' ? 1 : -1;
   sortObj[sortTerm] = sortOrder;
@@ -50,6 +51,10 @@ const getCoursesFromDB = async (query: Record<string, unknown>) => {
 
   return await filterQuery;
 };
+
+// const getCourseReview = async (id: string) => {
+//   // const result = await Course.findById(id).populate()
+// }
 
 export const courseService = {
   createCourseIntoDB,
