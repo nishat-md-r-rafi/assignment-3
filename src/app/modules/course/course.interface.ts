@@ -1,5 +1,4 @@
 import { Types } from 'mongoose';
-import { TReview } from '../review/review.interface';
 
 export type TTags = {
   name: string;

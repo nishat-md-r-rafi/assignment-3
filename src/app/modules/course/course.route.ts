@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { courseController } from './course.controller';
 
-const router = Router();
+export const courseRouter = Router();
 export const coursesRouter = Router();
 
-router.post('/', courseController.createCourse);
-coursesRouter.get('/', courseController.getCourses);
+courseRouter.post('/', courseController.createCourse);
+courseRouter.get('/best', courseController.getBestCourse);
 
-export const courseRouter = router;
+coursesRouter.get('/', courseController.getCourses);
+coursesRouter.get('/:courseId/reviews', courseController.getCourseReviews);
+coursesRouter.put('/:courseId', courseController.getCourseReviews);

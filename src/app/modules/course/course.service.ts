@@ -1,3 +1,4 @@
+import { Review } from '../review/review.model';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -47,16 +48,42 @@ const getCoursesFromDB = async (query: Record<string, unknown>) => {
 
   const filterQuery = sortQuery.find(copiedQuery).populate('categoryId');
 
-  // console.log(sortObj);
-
   return await filterQuery;
 };
 
-// const getCourseReview = async (id: string) => {
-//   // const result = await Course.findById(id).populate()
-// }
+const getCourseReviewsFromDB = async (id: string) => {
+  const reviews = await Review.find({ courseId: id });
+  const course = await Course.findById(id).select('-reviews');
+  return { course, reviews };
+};
+
+const getBestCourseFromDB = async () => {
+  const bestCourseReviewsandRatings = await Review.aggregate([
+    {
+      $group: {
+        _id: '$courseId',
+        averageRating: { $avg: '$rating' },
+        reviewCount: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { averageRating: -1 },
+    },
+    {
+      $limit: 1,
+    },
+  ]);
+
+  const course = await Course.findById(
+    bestCourseReviewsandRatings[0]?._id,
+  ).select('-reviews -__v');
+
+  return { course, ...bestCourseReviewsandRatings[0] };
+};
 
 export const courseService = {
   createCourseIntoDB,
   getCoursesFromDB,
+  getCourseReviewsFromDB,
+  getBestCourseFromDB,
 };
